@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Detect Screen Refresh Rate</title>
+</head>
+<body>
+  <p>Screen Refresh Rate: <span id="refresh-rate"></span> Hz</p>
+  <script>
+    let lastTime = performance.now();
+    let frameCount = 0;
+    let refreshRate = 0;
+    
+    function checkRefreshRate() {
+      const currentTime = performance.now();
+      const deltaTime = currentTime - lastTime;
+      frameCount++;
+      
+      if (deltaTime >= 1000) {
+        refreshRate = Math.round(frameCount / (deltaTime / 1000));
+        document.getElementById("refresh-rate").textContent = refreshRate;
+        lastTime = currentTime;
+        frameCount = 0;
+      }
+      
+      window.requestAnimationFrame(checkRefreshRate);
+    }
+    
+    window.requestAnimationFrame(checkRefreshRate);
+  </script>
+</body>
+</html>
